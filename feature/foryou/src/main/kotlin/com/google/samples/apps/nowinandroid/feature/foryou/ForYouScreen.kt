@@ -85,6 +85,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus.Denied
 import com.google.accompanist.permissions.rememberPermissionState
+import com.google.samples.apps.nowinandroid.core.designsystem.C
 import com.google.samples.apps.nowinandroid.core.designsystem.component.DynamicAsyncImage
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaButton
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaIconToggleButton
@@ -274,14 +275,16 @@ private fun LazyStaggeredGridScope.onboarding(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 24.dp),
+                            .padding(top = 24.dp)
+                            .testTag(C.for_You_Interests_Item_Header),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
                         text = stringResource(R.string.feature_foryou_onboarding_guidance_subtitle),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 8.dp, start = 24.dp, end = 24.dp),
+                            .padding(top = 8.dp, start = 24.dp, end = 24.dp)
+                            .testTag(C.for_You_Interests_Item_Subtitle),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodyMedium,
                     )
@@ -301,7 +304,8 @@ private fun LazyStaggeredGridScope.onboarding(
                             modifier = Modifier
                                 .padding(horizontal = 24.dp)
                                 .widthIn(364.dp)
-                                .fillMaxWidth(),
+                                .fillMaxWidth()
+                                .testTag(C.done_Button),
                         ) {
                             Text(
                                 text = stringResource(R.string.feature_foryou_done),

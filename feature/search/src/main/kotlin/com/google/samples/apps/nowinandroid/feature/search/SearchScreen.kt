@@ -80,6 +80,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.samples.apps.nowinandroid.core.designsystem.C
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.DraggableScrollbar
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.rememberDraggableScroller
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.scrollbarState
@@ -405,7 +406,9 @@ private fun RecentSearchesBody(
                         append(stringResource(id = searchR.string.feature_search_recent_searches))
                     }
                 },
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .testTag(C.recent_Searches),
             )
             if (recentSearchQueries.isNotEmpty()) {
                 IconButton(
@@ -451,7 +454,7 @@ private fun SearchToolbar(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.fillMaxWidth(),
     ) {
-        IconButton(onClick = { onBackClick() }) {
+        IconButton(onClick = { onBackClick() }, modifier = Modifier.testTag(C.back_Button)) {
             Icon(
                 imageVector = NiaIcons.ArrowBack,
                 contentDescription = stringResource(
@@ -494,6 +497,7 @@ private fun SearchTextField(
                     id = searchR.string.feature_search_title,
                 ),
                 tint = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.testTag(C.search_Bar_Search_Icon)
             )
         },
         trailingIcon = {
@@ -509,6 +513,7 @@ private fun SearchTextField(
                             id = searchR.string.feature_search_clear_search_text_content_desc,
                         ),
                         tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.testTag(C.trailing_Icon_Close)
                     )
                 }
             }
