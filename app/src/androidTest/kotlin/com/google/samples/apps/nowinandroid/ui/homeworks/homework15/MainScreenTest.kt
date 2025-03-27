@@ -21,6 +21,8 @@ import com.google.samples.apps.nowinandroid.MainActivity
 import com.kaspersky.components.composesupport.config.withComposeSupport
 import com.kaspersky.kaspresso.kaspresso.Kaspresso.Builder
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
+import io.github.kakaocup.compose.KakaoCompose.Override.useUnmergedTree
+import io.github.kakaocup.compose.node.element.KNode
 import org.junit.Rule
 import org.junit.Test
 
@@ -76,9 +78,15 @@ class MainScreenTest: TestCase(Builder.withComposeSupport()) {
                 mainScreen.forYouInterestsItemSubtitle.assertTextEquals("Updates from topics you follow will appear here. Follow some things to get started.")
             }
             step("Done Button Check") {
-                mainScreen.doneButton.assertHasClickAction()
-                mainScreen.doneButton {
-                    mainScreen.doneButtonText.assertTextEquals("Done")
+                mainScreen {
+                    useUnmergedTree = true
+                        doneButton {
+                        assertHasClickAction()
+                        val childNode: KNode = this.child {
+                            hasText("Done")
+                        }
+                        childNode.assertExists()
+                    }
                 }
             }
         }

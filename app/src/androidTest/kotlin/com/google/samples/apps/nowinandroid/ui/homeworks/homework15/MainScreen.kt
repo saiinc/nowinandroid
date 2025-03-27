@@ -18,8 +18,10 @@ package com.google.samples.apps.nowinandroid.ui.homeworks.homework15
 
 import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
 import com.google.samples.apps.nowinandroid.core.designsystem.C
+import com.google.samples.apps.nowinandroid.feature.foryou.R
 import io.github.kakaocup.compose.node.element.ComposeScreen
 import io.github.kakaocup.compose.node.element.KNode
+import io.github.kakaocup.kakao.common.utilities.getResourceString
 
 class MainScreen(semanticsProvider: SemanticsNodeInteractionsProvider) : ComposeScreen<MainScreen>(semanticsProvider) {
     val doneButtonText = KNode(semanticsProvider) {
@@ -55,6 +57,9 @@ class MainScreen(semanticsProvider: SemanticsNodeInteractionsProvider) : Compose
     val doneButton: KNode = child {
         hasTestTag(C.done_Button)
         useUnmergedTree = true
+        hasAnyChild(
+            androidx.compose.ui.test.hasText(getResourceString(R.string.feature_foryou_done))
+        )
     }
 
     val bottomNavBar: KNode = child {
