@@ -66,6 +66,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import com.google.samples.apps.nowinandroid.core.designsystem.C
 import com.google.samples.apps.nowinandroid.core.designsystem.R.drawable
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaIconToggleButton
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaTopicTag
@@ -137,6 +138,7 @@ fun NewsResourceCardExpanded(
                         NewsResourceTitle(
                             userNewsResource.title,
                             modifier = Modifier
+                                .testTag(C.lazy_List_Header_Title)
                                 .fillMaxWidth((.8f))
                                 .dragAndDropSource { _ ->
                                     DragAndDropTransferData(
@@ -160,10 +162,10 @@ fun NewsResourceCardExpanded(
                             )
                             Spacer(modifier = Modifier.size(6.dp))
                         }
-                        NewsResourceMetaData(userNewsResource.publishDate, userNewsResource.type)
+                        NewsResourceMetaData(userNewsResource.publishDate, userNewsResource.type, modifier = Modifier)
                     }
                     Spacer(modifier = Modifier.height(14.dp))
-                    NewsResourceShortDescription(userNewsResource.content)
+                    NewsResourceShortDescription(userNewsResource.content, modifier = Modifier)
                     Spacer(modifier = Modifier.height(12.dp))
                     NewsResourceTopics(
                         topics = userNewsResource.followableTopics,
@@ -284,7 +286,9 @@ fun dateFormatted(publishDate: Instant): String = DateTimeFormatter
 fun NewsResourceMetaData(
     publishDate: Instant,
     resourceType: String,
+    modifier: Modifier = Modifier
 ) {
+    modifier.testTag(C.lazy_List_Item_Metadata)
     val formattedDate = dateFormatted(publishDate)
     Text(
         if (resourceType.isNotBlank()) {
@@ -299,7 +303,9 @@ fun NewsResourceMetaData(
 @Composable
 fun NewsResourceShortDescription(
     newsResourceShortDescription: String,
+    modifier: Modifier = Modifier
 ) {
+    modifier.testTag(C.lazy_List_Item_Content)
     Text(newsResourceShortDescription, style = MaterialTheme.typography.bodyLarge)
 }
 

@@ -104,6 +104,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.guava)
     implementation(libs.coil.kt)
     implementation(libs.kotlinx.serialization.json)
+    androidTestImplementation(project(":core:data"))
+    androidTestImplementation(project(":core:data"))
 
     ksp(libs.hilt.compiler)
 
@@ -141,6 +143,8 @@ dependencies {
     androidTestImplementation("com.kaspersky.android-components:kaspresso:1.6.0") {
         exclude(module = "protobuf-lite")
     }
+    //noinspection UseTomlInstead
+    androidTestImplementation("io.github.kakaocup:compose:0.4.5")
 
 }
 
