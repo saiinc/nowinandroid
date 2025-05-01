@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask
 import com.google.samples.apps.nowinandroid.NiaBuildType
 
 plugins {
@@ -143,8 +144,11 @@ dependencies {
     androidTestImplementation("com.kaspersky.android-components:kaspresso:1.6.0") {
         exclude(module = "protobuf-lite")
     }
+    androidTestImplementation("com.kaspersky.android-components:kaspresso-allure-support:1.6.0")
     //noinspection UseTomlInstead
     androidTestImplementation("io.github.kakaocup:compose:0.4.5")
+
+
 
 }
 
@@ -159,4 +163,42 @@ baselineProfile {
 
 dependencyGuard {
     configuration("prodReleaseRuntimeClasspath")
+}
+
+// В файле build.gradle (уровня модуля или проекта)
+tasks.register<Delete>("deleteLocalAllureResults") {
+    group = "verification"
+    description = "Deletes local allure-results directory"
+
+    val targetDir = file("build/allure-results")
+    delete(targetDir)
+}
+
+tasks.register<Exec>("pullAllureResults") {
+    group = "verification"
+    description = "Pulls allure-results from device to app/build"
+
+    dependsOn(tasks.named("deleteLocalAllureResults"))
+
+    val adbCommand = listOf("adb", "pull", "/sdcard/Documents/allure-results", "build")
+    commandLine = adbCommand
+
+    isIgnoreExitValue = true
+}
+
+tasks.register<Exec>("clearDeviceAllureResults") {
+    group = "verification"
+    description = "Clears allure-results directory on Android device"
+
+    val adbCommand = listOf("adb", "shell", "rm", "-rf", "/sdcard/Documents/allure-results")
+    commandLine = adbCommand
+
+    isIgnoreExitValue = true
+}
+
+tasks.withType<DeviceProviderInstrumentTestTask>().configureEach {
+    if (name.lowercase().startsWith("connected") && name.lowercase().endsWith("androidtest")) {
+        dependsOn(tasks.named("clearDeviceAllureResults"))
+        finalizedBy(tasks.named("pullAllureResults"))
+    }
 }
